@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Anon - An eCommerce Website
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/codewithsadee/anon-ecommerce-website)
@@ -42,3 +43,6 @@ If you want to contact me you can reach me at [Twitter](https://www.twitter.com/
 ## License
 
 This project is **free to use** and does not contains any license.
+=======
+# E-Com-Sway
+>>>>>>> cea5f6f160ad5047ee876106f053d6ad38a0dd25
