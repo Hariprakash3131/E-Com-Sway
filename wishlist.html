@@ -1,143 +1,434 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Wishlist</title>
-
-<style>
-  *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family: "Poppins", sans-serif;
-  }
-  body{
-    background:#f7f8fc;
-    padding:30px;
-  }
-  h1{
-    margin-bottom:25px;
-    text-align:left;
-    font-size:24px;
-    font-weight:600;
-  }
-
-  #wishlist-container{
-    display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(270px,1fr));
-    gap:25px;
-  }
-
-  .wishlist-card{
-    background:#fff;
-    border-radius:14px;
-    box-shadow:0 4px 14px rgba(0,0,0,.05);
-    padding:15px;
-    overflow:hidden;
-    position:relative;
-    transition:.2s;
-  }
-
-  .wishlist-card:hover{
-    transform:translateY(-4px);
-  }
-
-  .wishlist-card img{
-    width:100%;
-    height:180px;
-    object-fit:cover;
-    border-radius:12px;
-    margin-bottom:12px;
-  }
-
-  .badge{
-    position:absolute;
-    top:14px;
-    left:14px;
-    background:#0bab36;
-    color:#fff;
-    padding:5px 10px;
-    border-radius:8px;
-    font-size:12px;
-    font-weight:600;
-  }
-
-  .wishlist-delete{
-    position:absolute;
-    top:14px;
-    right:14px;
-    background:#fff;
-    border:none;
-    font-size:16px;
-    padding:4px 8px;
-    border-radius:50%;
-    cursor:pointer;
-    box-shadow:0 2px 10px rgba(0,0,0,0.12);
-  }
-
-  .wishlist-card h3{
-    font-size:18px;
-    font-weight:600;
-    margin:6px 0;
-  }
-
-  .wishlist-card p{
-    font-weight:700;
-    color:#000;
-    margin-bottom:12px;
-    font-size:17px;
-  }
-
-  .add-cart-btn{
-    width:100%;
-    padding:10px 14px;
-    border:none;
-    background:#1a73e8;
-    color:#fff;
-    font-size:15px;
-    border-radius:8px;
-    cursor:pointer;
-  }
-
-  .add-cart-btn:hover{
-    background:#1057b3;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Wishlist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+        
+        body {
+            background: #f7f8fc;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .header-left h1 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+        
+        .header-left p {
+            color: #666;
+            font-size: 15px;
+        }
+        
+        .wishlist-count {
+            background: #1a73e8;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            margin-left: 8px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 4px 14px rgba(0,0,0,.05);
+        }
+        
+        .empty-state i {
+            font-size: 60px;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+        
+        .empty-state h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        
+        .empty-state p {
+            color: #777;
+            margin-bottom: 25px;
+        }
+        
+        .continue-shopping {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #1a73e8;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        
+        .continue-shopping:hover {
+            background: #1057b3;
+        }
+        
+        #wishlist-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        .wishlist-card {
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 4px 14px rgba(0,0,0,.05);
+            padding: 18px;
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .wishlist-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,.1);
+        }
+        
+        .wishlist-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        
+        .badge {
+            background: #0bab36;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .wishlist-delete {
+            background: #fff;
+            border: none;
+            font-size: 18px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            transition: all 0.2s;
+        }
+        
+        .wishlist-delete:hover {
+            background: #ff4d4f;
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .wishlist-card h3 {
+            font-size: 17px;
+            font-weight: 600;
+            margin: 6px 0;
+            line-height: 1.4;
+            color: #1a1a1a;
+            flex-grow: 1;
+        }
+        
+        .wishlist-card .price {
+            font-weight: 700;
+            color: #1a73e8;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .add-cart-btn {
+            width: 100%;
+            padding: 12px 14px;
+            border: none;
+            background: #1a73e8;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .add-cart-btn:hover {
+            background: #1057b3;
+        }
+        
+        .add-cart-btn i {
+            font-size: 14px;
+        }
+        
+        .wishlist-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+        
+        .action-btn {
+            padding: 14px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex: 1;
+            transition: all 0.2s;
+        }
+        
+        .add-all-btn {
+            background: #1a73e8;
+            color: white;
+            border: none;
+        }
+        
+        .add-all-btn:hover {
+            background: #1057b3;
+        }
+        
+        .clear-btn {
+            background: white;
+            color: #666;
+            border: 1px solid #ddd;
+        }
+        
+        .clear-btn:hover {
+            background: #f5f5f5;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 1024px) {
+            .wishlist-actions {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            #wishlist-container {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            #wishlist-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
-
 <body>
+    <div class="container">
+        <header>
+            <div class="header-left">
+                <h1>Your Wishlist <span class="wishlist-count" id="wishlist-count">0</span></h1>
+                <p id="wishlist-info">0 items • Recently Added</p>
+            </div>
+        </header>
+        
+        <div id="wishlist-container"></div>
+        
+        <div id="empty-state" class="empty-state" style="display: none;">
+            <i class="far fa-heart"></i>
+            <h2>Your wishlist is empty</h2>
+            <p>Add items you love to your wishlist. Review them anytime and easily move them to your cart.</p>
+            <a href="#" class="continue-shopping">Continue Shopping</a>
+        </div>
+        
+        <div class="wishlist-actions" id="wishlist-actions" style="display: none;">
+            <button class="action-btn add-all-btn" id="add-all-btn">
+                <i class="fas fa-shopping-cart"></i> Add All to Cart
+            </button>
+            <button class="action-btn clear-btn" id="clear-btn">
+                <i class="fas fa-trash"></i> Clear Wishlist
+            </button>
+        </div>
+    </div>
 
-<h1>Your Wishlist</h1>
+    <script>
+        // Get wishlist from localStorage
+        const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+        const container = document.getElementById('wishlist-container');
+        const emptyState = document.getElementById('empty-state');
+        const wishlistCount = document.getElementById('wishlist-count');
+        const wishlistInfo = document.getElementById('wishlist-info');
+        const wishlistActions = document.getElementById('wishlist-actions');
+        const addAllBtn = document.getElementById('add-all-btn');
+        const clearBtn = document.getElementById('clear-btn');
 
-<div id="wishlist-container"></div>
+        // Function to render wishlist items
+        function renderWishlist() {
+            // Update wishlist count
+            wishlistCount.textContent = wishlist.length;
+            wishlistInfo.textContent = `${wishlist.length} items • Recently Added`;
+            
+            // Show empty state if no items
+            if (wishlist.length === 0) {
+                container.style.display = 'none';
+                emptyState.style.display = 'block';
+                wishlistActions.style.display = 'none';
+                return;
+            }
+            
+            // Show wishlist items
+            container.style.display = 'grid';
+            emptyState.style.display = 'none';
+            wishlistActions.style.display = 'flex';
+            
+            // Render wishlist items using your exact functionality
+            container.innerHTML = wishlist.map((item, index) => `
+                <div class="wishlist-card">
+                    <div class="card-header">
+                        <span class="badge">In Stock</span>
+                        <button class="wishlist-delete" onclick="removeItem(${index})" title="Remove from wishlist">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    
+                    <img src="${item.image}" alt="${item.title}">
+                    <h3>${item.title}</h3>
+                    <p class="price">${item.price}</p>
+                    
+                    <button class="add-cart-btn">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            `).join('');
+        }
 
-<script>
-  let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-  const container = document.getElementById('wishlist-container');
+        // Function to remove item from wishlist
+        function removeItem(index) {
+            wishlist.splice(index, 1);
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+            renderWishlist();
+        }
 
-  function renderWishlist(){
-    container.innerHTML = wishlist.map((item,index) => `
-      <div class="wishlist-card">
-        <span class="badge">In Stock</span>
-        <button class="wishlist-delete" onclick="removeItem(${index})">×</button>
+        // Add all to cart functionality
+        addAllBtn.addEventListener('click', function() {
+            if (wishlist.length === 0) {
+                alert('No items to add to cart');
+                return;
+            }
+            
+            const originalText = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-check"></i> Added All to Cart';
+            this.style.background = '#0bab36';
+            
+            // Simulate adding all items to cart
+            setTimeout(() => {
+                this.innerHTML = originalText;
+                this.style.background = '';
+            }, 2000);
+        });
 
-        <img src="${item.image}">
-        <h3>${item.title}</h3>
-        <p>${item.price}</p>
+        // Clear wishlist functionality
+        clearBtn.addEventListener('click', function() {
+            if (wishlist.length === 0) {
+                alert('Wishlist is already empty');
+                return;
+            }
+            
+            if (confirm('Are you sure you want to clear your entire wishlist?')) {
+                wishlist.length = 0;
+                localStorage.setItem('wishlist', JSON.stringify(wishlist));
+                renderWishlist();
+            }
+        });
 
-        <button class="add-cart-btn">Add to Cart</button>
-      </div>
-    `).join('');
-  }
-
-  function removeItem(i){
-    wishlist.splice(i,1);
-    localStorage.setItem('wishlist', JSON.stringify(wishlist));
-    renderWishlist();
-  }
-
-  renderWishlist();
-</script>
-
+        // Initialize the page
+        renderWishlist();
+        
+        // Sample data for demo (remove this in production)
+        // This is just to show how the page looks with items
+        if (wishlist.length === 0) {
+            const sampleItems = [
+                {
+                    image: "https://via.placeholder.com/300x200?text=Product+Image",
+                    title: "Premium Wireless Headphones",
+                    price: "$89.99"
+                },
+                {
+                    image: "https://via.placeholder.com/300x200?text=Product+Image",
+                    title: "Smart Fitness Watch",
+                    price: "$199.99"
+                },
+                {
+                    image: "https://via.placeholder.com/300x200?text=Product+Image",
+                    title: "Latest Smartphone",
+                    price: "$799.99"
+                },
+                {
+                    image: "https://via.placeholder.com/300x200?text=Product+Image",
+                    title: "Mechanical Gaming Keyboard",
+                    price: "$129.99"
+                }
+            ];
+            
+            // Uncomment the next line to load sample data for demo
+            // localStorage.setItem('wishlist', JSON.stringify(sampleItems));
+        }
+    </script>
 </body>
 </html>
