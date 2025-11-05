@@ -1461,8 +1461,45 @@ body::-webkit-scrollbar-thumb:hover { background: hsl(0, 0%, 70%); }
 }
 
 
+/* 2 column layout for desktop */
+@media (min-width: 768px) {
 
+  /* base remains same */
 
+@media (min-width: 768px) {
+
+  .cta-container {
+    display: flex;
+    height: 380px;   /* adjust if needed */
+    aspect-ratio: unset;
+    overflow: hidden;
+  }
+
+  .cta-banner {
+    width: 50%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--border-radius-md) 0 0 var(--border-radius-md);
+  }
+
+  .cta-content {
+    position: static;
+    transform: none;
+    width: 50%;
+    background: rgba(255,255,255,0.75);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;    /* <-- vertical center */
+    text-align: left;           /* <-- left alignment */
+  }
+
+  .cta-content .discount,
+  .cta-btn {
+    margin-left: 0;
+  }
+
+}
 
 /*-----------------------------------*\
   #SERVICE
@@ -2629,3 +2666,4 @@ footer {
   }
 
 }
+
